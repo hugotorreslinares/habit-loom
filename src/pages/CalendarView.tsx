@@ -1,13 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
+import { ArrowLeft } from "lucide-react";
 
 const CalendarView = () => {
   const { categoryId } = useParams();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -89,6 +92,15 @@ const CalendarView = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <Button 
+        variant="outline" 
+        className="mb-4"
+        onClick={() => navigate("/")}
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        Back to Home
+      </Button>
+      
       <Card className="mb-6">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -100,9 +112,12 @@ const CalendarView = () => {
           <Calendar
             mode="multiple"
             selected={completedDates}
-            onSelect={(date) => {
-              if (date) {
-                toggleEntry.mutate({ date, completed: true });
+            onSelect={(dates) => {
+              if (dates && dates.length > 0) {
+                const lastSelectedDate = dates[dates.length - 1];
+                if (lastSelectedDate) {
+                  toggleEntry.mutate({ date: lastSelectedDate, completed: true });
+                }
               }
             }}
             className="rounded-md border"
