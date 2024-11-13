@@ -46,14 +46,18 @@ const CalendarView = () => {
       const { data: user } = await supabase.auth.getUser();
       if (!user.user) throw new Error("Not authenticated");
 
-      const { data: existing } = await supabase
+      const formattedDate = format(date, "yyyy-MM-dd");
+
+      const { data: existingEntries, error: fetchError } = await supabase
         .from("habit_entries")
         .select("*")
         .eq("category_id", categoryId)
-        .eq("date", format(date, "yyyy-MM-dd"))
-        .single();
+        .eq("date", formattedDate);
 
-      if (existing) {
+      if (fetchError) throw fetchError;
+
+      if (existingEntries && existingEntries.length > 0) {
+        const existing = existingEntries[0];
         const { data, error } = await supabase
           .from("habit_entries")
           .update({ completed: !existing.completed })
@@ -68,7 +72,7 @@ const CalendarView = () => {
           .from("habit_entries")
           .insert({
             category_id: categoryId,
-            date: format(date, "yyyy-MM-dd"),
+            date: formattedDate,
             completed: true,
             user_id: user.user.id
           })
