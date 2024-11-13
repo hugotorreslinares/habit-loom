@@ -9,11 +9,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Handle the initial auth state
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         navigate("/");
       }
     });
+
+    // Handle the hash fragment from email links
+    const hashFragment = window.location.hash;
+    if (hashFragment) {
+      const { access_token, refresh_token } = Object.fromEntries(
+        hashFragment
+          .substring(1)
+          .split("&")
+          .map(param => param.split("="))
+      );
+
+      if (access_token) {
+        supabase.auth.setSession({
+          access_token,
+          refresh_token: refresh_token || "",
+        });
+      }
+    }
   }, [navigate]);
 
   return (
