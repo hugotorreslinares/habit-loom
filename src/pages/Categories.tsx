@@ -3,7 +3,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
@@ -20,9 +19,13 @@ const Categories = () => {
   const { data: categories, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
+      const { data: user } = await supabase.auth.getUser();
+      if (!user.user) throw new Error("Not authenticated");
+
       const { data, error } = await supabase
         .from("categories")
         .select("*")
+        .eq("user_id", user.user.id)
         .order("created_at", { ascending: true });
       
       if (error) throw error;
@@ -32,9 +35,15 @@ const Categories = () => {
 
   const createCategory = useMutation({
     mutationFn: async (category: typeof newCategory) => {
+      const { data: user } = await supabase.auth.getUser();
+      if (!user.user) throw new Error("Not authenticated");
+
       const { data, error } = await supabase
         .from("categories")
-        .insert([category])
+        .insert({
+          ...category,
+          user_id: user.user.id
+        })
         .select()
         .single();
       

@@ -40,6 +40,9 @@ const CalendarView = () => {
 
   const toggleEntry = useMutation({
     mutationFn: async ({ date, completed }: { date: Date; completed: boolean }) => {
+      const { data: user } = await supabase.auth.getUser();
+      if (!user.user) throw new Error("Not authenticated");
+
       const { data: existing } = await supabase
         .from("habit_entries")
         .select("*")
@@ -60,11 +63,12 @@ const CalendarView = () => {
       } else {
         const { data, error } = await supabase
           .from("habit_entries")
-          .insert([{
+          .insert({
             category_id: categoryId,
             date: format(date, "yyyy-MM-dd"),
             completed: true,
-          }])
+            user_id: user.user.id
+          })
           .select()
           .single();
         
@@ -95,7 +99,7 @@ const CalendarView = () => {
         <CardContent>
           <Calendar
             mode="multiple"
-            selected={completedDates}
+            selected={completedDates as Date[]}
             onSelect={(date) => {
               if (date) {
                 toggleEntry.mutate({ date, completed: true });
