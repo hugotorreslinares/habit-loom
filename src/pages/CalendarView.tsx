@@ -99,7 +99,7 @@ const CalendarView = () => {
         <CardContent>
           <Calendar
             mode="multiple"
-            selected={completedDates as Date[]}
+            selected={completedDates}
             onSelect={(date) => {
               if (date) {
                 toggleEntry.mutate({ date, completed: true });
