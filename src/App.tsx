@@ -4,10 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+//import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/lib/supabase';
 import Login from "./pages/Login";
 import Categories from "./pages/Categories";
 import CalendarView from "./pages/CalendarView";
+import Index from "./pages/Index";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +54,14 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <CalendarView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/description"
+            element={
+              <ProtectedRoute>
+                <Index />
               </ProtectedRoute>
             }
           />

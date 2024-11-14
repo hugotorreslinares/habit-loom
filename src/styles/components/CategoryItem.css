@@ -1,0 +1,15 @@
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-icon {
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.calendar-icon:hover {
+  color: var(--primary-color);
+} 

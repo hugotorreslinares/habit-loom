@@ -1,8 +1,9 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
+//import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Login = () => {
@@ -40,6 +41,12 @@ const Login = () => {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl text-center">Welcome to HabitLoom</CardTitle>
+            <Link 
+          to={`/description`}
+          className="calendar-icon hover:text-primary transition-colors"
+          title="habit tracker"
+        >
+        </Link>
         </CardHeader>
         <CardContent>
           <Auth
