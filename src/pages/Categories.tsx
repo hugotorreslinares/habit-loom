@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import CategoryCard from "@/components/CategoryCard";
+import RandomQuote from "@/components/RandomQuote";
 import { useNavigate } from "react-router-dom";
 
 const iconOptions = [
@@ -86,7 +87,7 @@ const Categories = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto flex flex-col min-h-screen p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Categories</h1>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -134,15 +135,18 @@ const Categories = () => {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {categories?.map((category) => (
-          <CategoryCard
-            key={category.id}
-            category={category}
-            onClick={() => navigate(`/calendar/${category.id}`)}
-          />
-        ))}
+      <div className="flex-grow">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {categories?.map((category) => (
+            <CategoryCard
+              key={category.id}
+              category={category}
+              onClick={() => navigate(`/calendar/${category.id}`)}
+            />
+          ))}
+        </div>
       </div>
+      <div className="w-full"><RandomQuote /></div>
     </div>
   );
 };
