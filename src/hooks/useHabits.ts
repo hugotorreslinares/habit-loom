@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
+import { format } from 'date-fns';
 
 export function useHabits(categoryId: string) {
   const queryClient = useQueryClient();
@@ -10,27 +11,27 @@ export function useHabits(categoryId: string) {
       const { data: user } = await supabase.auth.getUser();
       if (!user.user) throw new Error("Not authenticated");
 
-      const today = new Date().toISOString().split('T')[0];
 
-      console.log('Querying habits with categoryId:', categoryId);
-      console.log('Today:', today);
+      const todayUTC = new Date();
+      const day = todayUTC.getUTCDate();
+      const month = todayUTC.getUTCMonth() + 1; // Los meses son 0-indexados
+      const year = todayUTC.getUTCFullYear();
+      const newDate = `${year}-${month}-${day}`;
+      console.log(`${year}-${month}-${day}`);
 
       const { data: habits, error: habitsError } = await supabase
         .from('habits')
         .select(`
           *,
-          habit_entries(completed)
+          habit_entries(date,created_at)
         `)
         .eq('category_id', categoryId)
         .eq('user_id', user.user.id)
-        .eq('habit_entries.date', today);
 
       if (habitsError) {
-        console.error('Error fetching habits:', habitsError);
         throw habitsError;
       }
-
-      console.log('Habits returned:', habits);
+      console.log("categoryHabits", habits)
       return habits;
     },
   });
@@ -54,11 +55,23 @@ export function useHabits(categoryId: string) {
     },
   });
 
+  const fetchCheckedHabits = async (date: string) => {
+    const { data: checked, error } = await supabase
+      .from('habit_entries')
+      .select('*')
+      .eq('category_id', categoryId)
+      .eq('date', date)
+
+    if (error) throw error;
+    console.log("checked", checked);
+    return checked;
+  };
+
   const toggleHabit = useMutation({
     mutationFn: async ({ 
       habitId, 
       completed,
-      date = new Date().toISOString().split('T')[0]
+      date = new Date().toISOString()
     }: { 
       habitId: string; 
       completed: boolean;
@@ -66,6 +79,9 @@ export function useHabits(categoryId: string) {
     }) => {
       const { data: user } = await supabase.auth.getUser();
       if (!user.user) throw new Error("Not authenticated");
+
+      const formattedDate = format(new Date(date), "yyyy-MM-dd");
+      console.log(formattedDate,"formatted date")
 
       if (completed) {
         const { error } = await supabase
@@ -75,7 +91,7 @@ export function useHabits(categoryId: string) {
               habit_id: habitId,
               user_id: user.user.id,
               category_id: categoryId,
-              date: date,
+              date: formattedDate,
               completed: true
             }
           ]);
@@ -86,7 +102,7 @@ export function useHabits(categoryId: string) {
           .delete()
           .eq('habit_id', habitId)
           .eq('user_id', user.user.id)
-          .eq('date', date);
+          .eq('date', formattedDate);
         if (error) throw error;
       }
     },
@@ -113,5 +129,6 @@ export function useHabits(categoryId: string) {
     addHabit,
     toggleHabit,
     deleteHabit,
+    fetchCheckedHabits,
   };
 } 

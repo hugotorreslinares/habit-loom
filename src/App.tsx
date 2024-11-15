@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Categories from "./pages/Categories";
 import CalendarView from "./pages/CalendarView";
 import Index from "./pages/Index";
+import Header from './components/Header';
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+    return <div className="container min-h-screen flex flex-col items-center justify-center bg-gray-100">Loading...</div>;
   }
 
   if (!isAuthenticated) {
@@ -45,14 +46,16 @@ const App = () => (
             path="/"
             element={
               <ProtectedRoute>
+                 <Header />
                 <Categories />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/calendar/:categoryId"
+            path="/calendar/:categoryId"p
             element={
               <ProtectedRoute>
+                 <Header />
                 <CalendarView />
               </ProtectedRoute>
             }
@@ -61,6 +64,7 @@ const App = () => (
             path="/description"
             element={
               <ProtectedRoute>
+                 <Header />
                 <Index />
               </ProtectedRoute>
             }

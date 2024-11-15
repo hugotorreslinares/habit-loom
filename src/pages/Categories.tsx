@@ -75,13 +75,13 @@ const Categories = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="container min-h-screen flex flex-col items-center justify-center bg-gray-100">Loading...</div>;
   }
 
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Habit Categories</h1>
+        <h1 className="text-3xl font-bold">Categories</h1>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button>

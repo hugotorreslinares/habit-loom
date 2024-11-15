@@ -12,4 +12,16 @@
 
 .calendar-icon:hover {
   color: var(--primary-color);
-} 
+}
+
+.habit-item {
+  position: relative;
+}
+
+.habit-item:hover .delete-icon {
+  opacity: 1;
+}
+.delete-icon {
+  opacity: 0;
+  transition: opacity 0.2s;
+}

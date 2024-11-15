@@ -39,9 +39,9 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
   return (
     <Card 
       className="cursor-pointer hover:shadow-lg transition-shadow"
-      style={{ borderColor: category.color }}
+      style={{ borderBottom: 1, borderTopColor: category.color }}
     >
-      <CardHeader>
+      <CardHeader className=" bg-blue-100 hover:bg-blue-200 transition-colors duration-200">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span>{category.icon}</span>
@@ -70,7 +70,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
             {habits?.map((habit) => (
               <li 
                 key={habit.id}
-                className="flex items-center justify-between p-2 hover:bg-gray-50 rounded"
+                className="flex items-center justify-between p-2 hover:bg-gray-50 rounded habit-item"
               >
                 <div className="flex items-center gap-2">
                   <Checkbox
@@ -85,7 +85,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
                   <span>{habit.name}</span>
                 </div>
                 <button
-                  className="text-red-500 hover:text-red-700"
+                  className="text-red-500 hover:text-red-700 opacity-100 group-hover:opacity-100 transition-opacity"
                   onClick={(e) => {
                     e.stopPropagation();
                     if (confirm('Are you sure you want to delete this habit?')) {
