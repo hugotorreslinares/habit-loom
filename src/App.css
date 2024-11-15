@@ -4,6 +4,9 @@
   padding: 2rem;
   text-align: center;
 }
+h1 {
+       font-family: 'Poppins', sans-serif;
+     }
 
 .logo {
   height: 6em;
@@ -39,4 +42,19 @@
 
 .read-the-docs {
   color: #888;
+}
+.circular-image {
+  width: 200px; /* Set the width */
+  height: 200px; /* Set the height to the same value as width */
+  overflow: hidden; /* Hide any overflow */
+  border-radius: 50%; /* Make the container circular */
+  display: flex; /* Center the image */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.circular-image img {
+  width: 100%; /* Make the image fill the container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Cover the container without stretching */
 }

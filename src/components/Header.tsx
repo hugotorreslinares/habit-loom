@@ -36,7 +36,7 @@ const Header = () => {
 
   return (
     <header className="container flex justify-between items-center p-4 bg-gray-800 text-white">
-      <h1 className="flex justify-between text-xl font-bold cursor-pointer" onClick={() => navigate('/')}>
+      <h1 className="flex justify-between text-xl font-bold cursor-pointer bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-green-500" onClick={() => navigate('/')}>
        <Scale className="h-5 w-5 mr-3"/> Balanced
       </h1>
       <div className="flex justify-between">
@@ -46,7 +46,7 @@ const Header = () => {
         <Button onClick={handleLogout}  className="mr-4">
           Logout
         </Button>
-        <Button onClick={toggleTheme} variant="secondary" className="flex items-center">
+        <Button onClick={toggleTheme} variant="secondary" className="hidden items-center">
           {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
       </div>

@@ -1,14 +1,9 @@
-/* body {
+ body {
   --background-color: #ffffff;
   --text-color: #000000;
-} */
+} 
 
 body.dark {
   --background-color: #1f2023;
   --text-color: #ffffff;
 }
-
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-} 
