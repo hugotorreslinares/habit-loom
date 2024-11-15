@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button'; // Adjust the import based on your button component
 import { Sun, Moon,Scale } from 'lucide-react'; // Import icons from Lucide
 

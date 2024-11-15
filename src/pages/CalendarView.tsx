@@ -121,13 +121,9 @@ const transformData = (array) => {
 
     return Array.from(uniqueEntries.values()); // Convert the Map back to an array
 };
-
-// Llamada al método
-const formattedDates = entries? transformData(entries) :[];
-console.log(entries)
+  const formattedDates = entries? transformData(entries) :[];
   const completedDates = entries?.map(entry => new Date(entry.date)) || [];
-console.log(formattedDates );
-console.log("compleeed",completedDates);
+
   return (
     <div className="container mx-auto p-4">
       <Button 
@@ -146,7 +142,8 @@ console.log("compleeed",completedDates);
             <span>{category?.name}</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex justify-around">
+        <CardContent className="flex flex-col md:flex-row justify-around">
+          <div className="w-full md:w-1/2">
           <Calendar
             mode="multiple"
             selected={completedDates}
@@ -160,7 +157,8 @@ console.log("compleeed",completedDates);
             }}
             className="rounded-md border"
           />
-          <div className="mt-4">
+          </div>
+          <div className="w-full md:w-1/2 mt-4 md:mt-0">
               {formattedDates && formattedDates.length > 0 ? (
           <table className="min-w-full border-collapse border border-gray-200">
             <thead>

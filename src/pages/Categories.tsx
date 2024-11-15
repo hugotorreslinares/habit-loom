@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-//import { supabase } from "@/integrations/supabase/client";
 import { supabase } from '@/lib/supabase';
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ import CategoryCard from "@/components/CategoryCard";
 import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
-  const [newCategory, setNewCategory] = useState({ name: "", icon: "🎯", color: "#4F46E5" });
+  const [newCategory, setNewCategory] = useState({ name: "", icon: "🌟", color: "#4F46E5" });
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -91,7 +90,7 @@ const Categories = () => {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Create New Category</DialogTitle>
+              <DialogTitle>New Category</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

@@ -40,7 +40,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Welcome to HabitLoom</CardTitle>
+          <CardTitle className="text-2xl text-center">Welcome to Balanced</CardTitle>
             <Link 
           to={`/description`}
           className="calendar-icon hover:text-primary transition-colors"
