@@ -9,6 +9,14 @@ import { useToast } from "@/components/ui/use-toast";
 import CategoryCard from "@/components/CategoryCard";
 import { useNavigate } from "react-router-dom";
 
+const iconOptions = [
+  "🌟", "🎯", "💡", "📅", "📝", // Existing icons
+  "🔥", "✅", "🚀", "🎉", "📊", // First set of new icons
+  "🔔", "🌈", "🛠️", "📌", "💼", // Second set of new icons
+  "🌍", "🎵", "🍀", "🏆", "💖", // Additional icons
+  "🧩", "🎨", "🧘‍♂️", "📖", "🌌" // More icons
+];
+
 const Categories = () => {
   const [newCategory, setNewCategory] = useState({ name: "", icon: "🌟", color: "#4F46E5" });
   const [isOpen, setIsOpen] = useState(false);
@@ -100,12 +108,24 @@ const Categories = () => {
                   onChange={(e) => setNewCategory({ ...newCategory, name: e.target.value })}
                 />
               </div>
-              <div>
+              <div className="flex items-center">
                 <Input
                   type="color"
                   value={newCategory.color}
                   onChange={(e) => setNewCategory({ ...newCategory, color: e.target.value })}
+                  className="mr-4"
                 />
+                <select
+                  value={newCategory.icon}
+                  onChange={(e) => setNewCategory({ ...newCategory, icon: e.target.value })}
+                  className="border rounded p-2"
+                >
+                  {iconOptions.map((icon) => (
+                    <option key={icon} value={icon}>
+                      {icon} {icon}
+                    </option>
+                  ))}
+                </select>
               </div>
               <Button type="submit" className="w-full">
                 Create Category

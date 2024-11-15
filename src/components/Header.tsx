@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
-import { Button } from '@/components/ui/button'; // Adjust the import based on your button component
-import { Sun, Moon,Scale } from 'lucide-react'; // Import icons from Lucide
+import { Button } from '@/components/ui/button'; 
+import { Sun, Moon, CircleSlash2 } from 'lucide-react'; // Import icons from Lucide
 
 const Header = () => {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ const Header = () => {
   return (
     <header className="container flex justify-between items-center p-4 bg-gray-800 text-white">
       <h1 className="flex justify-between text-xl font-bold cursor-pointer bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-green-500" onClick={() => navigate('/')}>
-       <Scale className="h-5 w-5 mr-3"/> Balanced
+       <CircleSlash2 className="h-5 w-5 mr-3"/> Balanced
       </h1>
       <div className="flex justify-between">
         <Button onClick={() => navigate('/description')} className="mr-4">
