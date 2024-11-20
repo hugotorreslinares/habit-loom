@@ -146,7 +146,9 @@ const Categories = () => {
           ))}
         </div>
       </div>
-      <div className="w-full float-end"><RandomQuote /></div>
+      <div className="relative w-full">
+        <div className="absolute right-0 bottom-0"><RandomQuote /></div>
+      </div>
     </div>
   );
 };

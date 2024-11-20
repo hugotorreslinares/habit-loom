@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 const RandomQuote: React.FC = () => {
   const [quote, setQuote] = useState<string>("");
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const fetchRandomQuote = async () => {
     try {

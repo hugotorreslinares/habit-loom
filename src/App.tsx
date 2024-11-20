@@ -40,7 +40,12 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={
+            <ProtectedRoute>
+                <Header />
+                <ProfilePage />
+                </ProtectedRoute>
+              } />
           <Route
             path="/"
             element={
@@ -62,10 +67,10 @@ const App = () => (
           <Route
             path="/description"
             element={
-              <ProtectedRoute>
+              <div>
                 <Header />
                 <Index />
-              </ProtectedRoute>
+              </div>
             }
           />
         </Routes>

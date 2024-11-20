@@ -18,7 +18,7 @@ const ProfilePage: React.FC = () => {
       } else {
         setUser(user);
         setName(user?.user_metadata?.name || '');
-        setEmail(user?.email || '');
+        setEmail(user?.email || 'user');
       }
       setLoading(false);
     };
