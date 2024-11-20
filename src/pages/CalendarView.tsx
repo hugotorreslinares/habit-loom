@@ -104,25 +104,29 @@ const CalendarView = () => {
 const transformData = (array) => {
     const uniqueEntries = new Map();
     array.forEach(item => {
-        const fecha= item.date;
-        const habitKey = `${fecha}-${item.habits.name}`; // Create a unique key based on date and habit name
+      console.log(item.date)
+        const habitKey = `${item.date}-${item.habits.name}`; // Create a unique key based on date and habit name
         if (!uniqueEntries.has(habitKey)) {
             uniqueEntries.set(habitKey, {
-                date: fecha, 
+                date: item.date, 
                 habits: {
                     ...item.habits,
                     repetitions: 1 
                 }
             });
-        } else {
-            const existingEntry = uniqueEntries.get(habitKey);
-        }
+        } 
     });
 
     return Array.from(uniqueEntries.values()); // Convert the Map back to an array
 };
+
   const formattedDates = entries? transformData(entries) :[];
-  const completedDates = entries?.map(entry => new Date(entry.date)) || [];
+  const completedDates = entries?.map(entry =>{
+  const date = new Date(entry.date);
+  date.setDate(date.getDate() + 1); // Add one day to the date
+  return date;
+}) || [];
+  console.log("completedDates",completedDates)
 
   return (
     <div className="container mx-auto p-4">
@@ -144,6 +148,7 @@ const transformData = (array) => {
         </CardHeader>
         <CardContent className="flex flex-col md:flex-row justify-around">
           <div className="w-full md:w-1/2">
+          
           <Calendar
             mode="multiple"
             selected={completedDates}

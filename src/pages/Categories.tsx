@@ -92,9 +92,9 @@ const Categories = () => {
         <h1 className="text-3xl font-bold">Categories</h1>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="bg-green-600">
               <Plus className="mr-2 h-4 w-4" />
-              Add Category
+              New Category
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -123,7 +123,7 @@ const Categories = () => {
                 >
                   {iconOptions.map((icon) => (
                     <option key={icon} value={icon}>
-                      {icon} {icon}
+                      {icon} 
                     </option>
                   ))}
                 </select>
@@ -146,7 +146,7 @@ const Categories = () => {
           ))}
         </div>
       </div>
-      <div className="w-full"><RandomQuote /></div>
+      <div className="w-full float-end"><RandomQuote /></div>
     </div>
   );
 };

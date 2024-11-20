@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
-import { PlusIcon, TrashIcon, Calendar, ChevronUp, ChevronDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { PlusIcon, TrashIcon, Calendar, ChevronUp, ChevronDown, CheckCircle } from "lucide-react";
 import { useHabits } from "@/hooks/useHabits";
 
 interface Habit {
@@ -42,7 +41,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
       className="cursor-pointer hover:shadow-lg transition-shadow"
       style={{ borderBottom: 1, borderTopColor: category.color }}
     >
-      <CardHeader className=" bg-blue-100 hover:bg-blue-200 transition-colors duration-200">
+      <CardHeader className="bg-gray-100 hover:bg-blue-200 transition-colors duration-200">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button 
@@ -50,7 +49,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
                 e.stopPropagation();
                 setIsExpanded(!isExpanded);
               }}
-              className="p-2 hover:bg-gray-100 rounded-full flex items-center gap-2"
+              className="p-2 hover:bg-gray-200 rounded-full flex items-center gap-2"
             >
               {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
               <span>{category.icon}</span>
@@ -84,18 +83,24 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
                   key={habit.id}
                   className="flex items-center justify-between p-2 hover:bg-gray-50 rounded habit-item"
                 >
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      checked={habit.isCompleted}
-                      onCheckedChange={(checked) => {
-                        toggleHabit.mutate({ 
-                          habitId: habit.id, 
-                          completed: checked as boolean 
-                        });
-                      }}
-                    />
-                    <span>{habit.name}</span>
+                  <div className="flex place-items-stretch gap-2">
+                     <button
+                    className={`text-green-500 hover:text-green-700 transition-opacity ${habit.isCompleted ? 'line-through' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleHabit.mutate({ 
+                        habitId: habit.id, 
+                        completed: !habit.isCompleted 
+                      });
+                    }}
+                    title="Mark as done for today"
+                  >
+                    <CheckCircle className="h-5 w-5" />
+                  </button>
+                    <span className="${habit.isCompleted ? 'line-through' : ''}">{habit.name} {habit.isCompleted}</span>
                   </div>
+                  <div className="flex">
+                    
                   <button
                     className="text-red-500 hover:text-red-700 opacity-100 group-hover:opacity-100 transition-opacity"
                     onClick={(e) => {
@@ -107,6 +112,8 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
                   >
                     <TrashIcon className="h-4 w-4" />
                   </button>
+                  </div>
+                 
                 </li>
               ))}
             </ul>

@@ -56,6 +56,7 @@ export function useHabits(categoryId: string) {
   });
 
   const fetchCheckedHabits = async (date: string) => {
+    console.log("date",date)
     const { data: checked, error } = await supabase
       .from('habit_entries')
       .select('*')
