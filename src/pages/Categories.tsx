@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from '@/lib/supabase';
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
@@ -144,7 +145,25 @@ const Categories = () => {
               onClick={() => navigate(`/calendar/${category.id}`)}
             />
           ))}
+        
+        </div>  
+        {categories.length == 0 && (
+        <div className="w-full p-60 pt-20"> 
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center">
+                This is the beginning of your new journey
+              </CardTitle>
+              </CardHeader>
+              
+              <CardContent>
+                Start by creating a new category, and then add the habits you want to track or each category.
+                <br></br>
+                click on the calendar Icon to have an insight on how well you have performed.
+              </CardContent>
+          </Card>
         </div>
+        )}
       </div>
       <div className="relative w-full">
         <div className="absolute right-0 bottom-0"><RandomQuote /></div>
