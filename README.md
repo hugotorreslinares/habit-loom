@@ -1,6 +1,6 @@
 # Balanced: Your Companion in Building Habits
 
-Welcome to **Balanced**, a powerful habit tracker designed to help you build and maintain healthy habits effortlessly. This project aims to provide users with an intuitive interface and tools that adapt to their lifestyle, making habit formation a seamless experience.
+Welcome to **BeBalanced**, a powerful habit tracker designed to help you build and maintain healthy habits effortlessly. This project aims to provide users with an intuitive interface and tools that adapt to their lifestyle, making habit formation a seamless experience.
 
 ## Features
 
@@ -12,7 +12,7 @@ Welcome to **Balanced**, a powerful habit tracker designed to help you build and
 
 ## Getting Started
 
-To get started with Balanced, follow these steps:
+To get started with BeBalanced, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
@@ -31,6 +31,23 @@ To get started with Balanced, follow these steps:
    ```
 
 4. **Open your browser** and navigate to `http://localhost:3000` to see the application in action.
+
+## Docker Support
+
+To run Balanced using Docker, follow these steps:
+
+1. **Build the Docker Image**:
+   ```bash
+   docker build -t balanced-app .
+   ```
+
+2. **Run the Docker Container**:
+   ```bash
+   docker run -p 80:80 balanced-app
+   ```
+
+3. **Access the Application**:
+   Open your web browser and navigate to `http://localhost` to see the application running.
 
 ## Technologies Used
 

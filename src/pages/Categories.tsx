@@ -90,7 +90,7 @@ const Categories = () => {
   return (
     <div className="container mx-auto flex flex-col min-h-screen p-4">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Categories</h1>
+        <h2 className="text-1xl font-bold">Categories</h2>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button className="bg-green-600">

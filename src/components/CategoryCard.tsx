@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
-import { PlusIcon, TrashIcon, Calendar, ChevronUp, ChevronDown, CheckCircle } from "lucide-react";
+import { PlusIcon, TrashIcon, Calendar, ChevronUp, ChevronDown, CheckCircle, EllipsisVertical } from "lucide-react";
 import { useHabits } from "@/hooks/useHabits";
+import noHabitsImage from '../assets/runner.png';
 
 interface Habit {
   id: string;
@@ -27,7 +28,7 @@ interface CategoryCardProps {
 const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
   const { habits, addHabit, toggleHabit, deleteHabit } = useHabits(category.id);
   const [isExpanded, setIsExpanded] = useState(true);
-
+const [isEllipsis, setIsEllipsis] = useState(false);
   const handleAddHabit = async (e: React.MouseEvent) => {
     e.stopPropagation();
     const name = prompt('Enter habit name:');
@@ -35,6 +36,11 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
       await addHabit.mutateAsync(name);
     }
   };
+  const handleEllipsisCategory = ()=>{
+    debugger;
+    setIsEllipsis(true);
+    console.log(isEllipsis)
+  }
 
   return (
     <Card 
@@ -53,7 +59,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
             >
               {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
               <span>{category.icon}</span>
-              <span>{category.name}</span>
+              <span>{category.name}</span>{isEllipsis}
             </button>
             <Link 
               to={`/calendar/${category.id}`}
@@ -63,8 +69,15 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
             >
               <Calendar size={20} />
             </Link>
+             <button 
+            className="p-2 hover:bg-gray-100 rounded-full"
+            onClick={handleEllipsisCategory}
+          >
+            <EllipsisVertical className="h-5 w-5" />
+          </button>
+             
           </div>
-          <button 
+         <button 
             className="p-2 hover:bg-gray-100 rounded-full"
             onClick={handleAddHabit}
           >
@@ -75,7 +88,16 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
       {isExpanded && (
         <CardContent>
           {!habits?.length ? (
-            <div className="text-sm text-gray-500">No habits added yet</div>
+            <div>
+              <div className="pt-3 max-h-50 flex justify-center">
+                <img 
+                  src={noHabitsImage} 
+                  alt="create a new habit" 
+                  className="h-40 rounded-full pr-3" 
+                />
+              </div>
+              <div className="text-sm text-gray-500 pt-3 text-center">No habits added yet</div>
+            </div>
           ) : (
             <ul className="space-y-2">
               {habits?.map((habit) => (
@@ -109,6 +131,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
                         deleteHabit.mutate(habit.id);
                       }
                     }}
+                     title="Delete Habit"
                   >
                     <TrashIcon className="h-4 w-4" />
                   </button>
