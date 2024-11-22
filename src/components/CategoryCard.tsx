@@ -38,10 +38,10 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
 
   return (
     <Card 
-      className="cursor-pointer hover:shadow-lg transition-shadow"
+      className="hover:shadow-lg transition-shadow"
       style={{ borderBottom: 1, borderTopColor: category.color }}
     >
-      <CardHeader className="bg-gray-100 hover:bg-blue-200 transition-colors duration-200">
+      <CardHeader className="bg-gray-100 hover:bg-gray-200 transition-colors duration-200">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button 
@@ -81,7 +81,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
               {habits?.map((habit) => (
                 <li 
                   key={habit.id}
-                  className="flex items-center justify-between p-2 hover:bg-gray-50 rounded habit-item"
+                  className="flex items-center justify-between p-2 hover:bg-gray-50 pt-2 rounded habit-item"
                 >
                   <div className="flex place-items-stretch gap-2">
                      <button

@@ -140,7 +140,7 @@ const transformData = (array) => {
       </Button>
       
       <Card className="mb-6">
-        <CardHeader className=" bg-blue-100 hover:bg-blue-200 transition-colors duration-200">
+        <CardHeader className=" bg-gray-100 hover:bg-gray-200 transition-colors duration-200">
           <CardTitle className="flex items-center gap-2">
             <span>{category?.icon}</span>
             <span>{category?.name}</span>
