@@ -2,8 +2,8 @@
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-items-start bg-gray-100">
-      <div className="container  bg-gray-200 p-8 rounded-lg shadow-md">
+    <div className="container min-h-screen flex flex-col items-center justify-items-start bg-gray-100">
+      <div className="w-full  p-20">
         <h1 className="text-4xl text-center font-bold mb-4">Balanced</h1>
         <h2 className="text-2xl text center font-semibold mb-4">Your Companion in Building Habits</h2>
         <p className="mb-6">
