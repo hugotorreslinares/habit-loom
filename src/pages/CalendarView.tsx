@@ -147,7 +147,7 @@ const transformData = (array) => {
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col md:flex-row justify-around">
-          <div className="w-full md:w-1/2">
+          <div>
           
           <Calendar
             mode="multiple"
