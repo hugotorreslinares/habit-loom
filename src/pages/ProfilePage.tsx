@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
 
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -42,9 +45,16 @@ const ProfilePage: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold">Profile Page</h1>
-      <div className="profile-info mt-4">
+    <div className="container mx-auto p-4 ">
+      <h1 className="text-1xl font-bold">Profile Page</h1>
+      <div class="grid grid-rows-3 grid-flow-col gap-4 px-4 py-4 leading-10">
+    <div class="p-4 w-full bg-slate-50 rounded-xl row-span-3">
+        <h1>User Info</h1>
+        <div className="profile-info mt-3">
+            <Avatar>
+                <AvatarImage src="/src/assets/runner.png" alt="User's Avatar" />
+                <AvatarFallback>U</AvatarFallback> {/* Fallback content, e.g., initials */}
+            </Avatar>
         <h2 className="text-2xl">{name}</h2>
         <p className="text-lg">{email}</p>
         <div className="mt-4">
@@ -58,7 +68,29 @@ const ProfilePage: React.FC = () => {
             Update
           </Button>
         </div>
-      </div>
+      </div></div>
+    <div class="p-4 w-full bg-zinc-100 rounded-xl col-span-2">Categories</div>
+    <div class="p-4 w-full bg-stone-100 rounded-xl row-span-2 col-span-2">
+         <Tabs defaultValue="tab1">
+      <TabsList>
+        <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+        <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+        <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+      </TabsList>
+      <TabsContent value="tab1">
+        <p>This is the content for Tab 1.</p>
+      </TabsContent>
+      <TabsContent value="tab2">
+        <p>This is the content for Tab 2.</p>
+      </TabsContent>
+      <TabsContent value="tab3">
+        <p>This is the content for Tab 3.</p>
+      </TabsContent>
+    </Tabs>
+
+    </div>
+</div>
+      
     </div>
   );
 };

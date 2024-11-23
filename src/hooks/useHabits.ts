@@ -124,12 +124,27 @@ export function useHabits(categoryId: string) {
       queryClient.invalidateQueries({ queryKey: ['habits', categoryId] });
     },
   });
+  const deleteCategory = useMutation({
+    
+    mutationFn: async (categoryId: string) => {
+      const { error } = await supabase
+        .from('categories') // Assuming your categories are stored in a 'categories' table
+        .delete()
+        .eq('id', categoryId); // Use the category ID to identify which category to delete
+
+      if (error) throw error; // Throw an error if the deletion fails
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['habits'] }); // Invalidate queries related to habits to refresh the data
+    },
+  });
 
   return {
     habits,
     addHabit,
     toggleHabit,
     deleteHabit,
+    deleteCategory,
     fetchCheckedHabits,
   };
 } 

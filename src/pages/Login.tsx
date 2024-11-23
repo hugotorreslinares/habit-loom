@@ -1,7 +1,7 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useNavigate, Link } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import loginImage from '../assets/BeBalancedBg.jpg';
@@ -27,12 +27,7 @@ const Login = () => {
             alt="BeBalanced" 
             className="h-140 w-140 object-cover rounded-full pr-3" 
           />
-          {
-            /* 
-              <h1 className="text-4xl font-bold text-center font-poppins bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">BeBalanced</h1>
-          */
-          }    
-       <h2 className="text-1xl font-bold text-center font-poppins pb-3">Your Life, Your Balance: Track Habits That Matter.</h2></CardTitle>
+       <h2 className="text-1xl font-bold text-center font-poppins pb-3 pt-3">Your Life, Your Balance.<br/> Track Habits That Matter.</h2></CardTitle>
             <Link to={`/description`} className="calendar-icon hover:text-primary transition-colors" title="habit tracker"></Link>
           </CardHeader>
           <CardContent>

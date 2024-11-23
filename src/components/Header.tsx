@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button'; 
-import { Sun, Moon, CircleSlash2 } from 'lucide-react'; // Import icons from Lucide
+import { Sun, Moon, CircleSlash2, UserPen, LogOut, Info } from 'lucide-react'; // Import icons from Lucide
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,6 +15,9 @@ const Header = () => {
     } else {
       navigate('/login'); // Redirect to login page after logout
     }
+  };
+  const handleProfile = async () => {
+      navigate('/profile'); // Redirect to login page after logout
   };
 
   const toggleTheme = () => {
@@ -41,11 +44,16 @@ const Header = () => {
       </h1>
       <div className="flex justify-between">
         <Button onClick={() => navigate('/description')} className="mr-4">
-          Description
+          <Info className="h-5 w-5" />
         </Button>
         <Button onClick={handleLogout}  className="mr-4">
+          <LogOut className="h-5 w-5"/>
           Logout
         </Button>
+                <Button onClick={handleProfile}  className="mr-4">
+          <UserPen className="h-5 w-5" /> Profile
+        </Button>
+
         <Button onClick={toggleTheme} variant="secondary" className="hidden items-center">
           {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>

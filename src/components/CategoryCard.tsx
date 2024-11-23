@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
 import { PlusIcon, TrashIcon, Calendar, ChevronUp, ChevronDown, CheckCircle, EllipsisVertical } from "lucide-react";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
 import { useHabits } from "@/hooks/useHabits";
 import noHabitsImage from '../assets/runner.png';
 
@@ -26,9 +35,8 @@ interface CategoryCardProps {
 }
 
 const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
-  const { habits, addHabit, toggleHabit, deleteHabit } = useHabits(category.id);
+  const { habits, addHabit, toggleHabit, deleteHabit, deleteCategory } = useHabits(category.id);
   const [isExpanded, setIsExpanded] = useState(true);
-const [isEllipsis, setIsEllipsis] = useState(false);
   const handleAddHabit = async (e: React.MouseEvent) => {
     e.stopPropagation();
     const name = prompt('Enter habit name:');
@@ -36,11 +44,6 @@ const [isEllipsis, setIsEllipsis] = useState(false);
       await addHabit.mutateAsync(name);
     }
   };
-  const handleEllipsisCategory = ()=>{
-    debugger;
-    setIsEllipsis(true);
-    console.log(isEllipsis)
-  }
 
   return (
     <Card 
@@ -59,7 +62,7 @@ const [isEllipsis, setIsEllipsis] = useState(false);
             >
               {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
               <span>{category.icon}</span>
-              <span>{category.name}</span>{isEllipsis}
+              <span>{category.name}</span>
             </button>
             <Link 
               to={`/calendar/${category.id}`}
@@ -69,13 +72,26 @@ const [isEllipsis, setIsEllipsis] = useState(false);
             >
               <Calendar size={20} />
             </Link>
-             <button 
-            className="p-2 hover:bg-gray-100 rounded-full"
-            onClick={handleEllipsisCategory}
-          >
-            <EllipsisVertical className="h-5 w-5" />
-          </button>
-             
+            <DropdownMenu>
+      <DropdownMenuTrigger>
+        <button className="p-2 bg-gray-100 text-green rounded"><EllipsisVertical className="h-5 w-5" /></button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+       {/*  <DropdownMenuItem onClick={() => console.log("Edit action")}>Edit</DropdownMenuItem> */}
+       <DropdownMenuItem  onClick={(e) => {
+                      e.stopPropagation();
+                      if (confirm('Are you sure you want to delete this Category?')) {
+                        deleteCategory.mutate(category.id);
+                      }
+                    }}>
+                    Delete
+       </DropdownMenuItem> 
+        <DropdownMenuSeparator />
+       {/*  <DropdownMenuItem onClick={() => console.log("View action")}>View</DropdownMenuItem> */}
+      </DropdownMenuContent>
+    </DropdownMenu>
           </div>
          <button 
             className="p-2 hover:bg-gray-100 rounded-full"

@@ -11,6 +11,8 @@ import CategoryCard from "@/components/CategoryCard";
 import RandomQuote from "@/components/RandomQuote";
 import { useNavigate } from "react-router-dom";
 
+
+
 const iconOptions = [
   "🌟", "🎯", "💡", "📅", "📝", // Existing icons
   "🔥", "✅", "🚀", "🎉", "📊", // First set of new icons
@@ -90,7 +92,8 @@ const Categories = () => {
   return (
     <div className="container mx-auto flex flex-col min-h-screen p-4">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-1xl font-bold">Categories</h2>
+        <h2 className="text-1xl font-bold">Categories
+        </h2>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button className="bg-green-600">
