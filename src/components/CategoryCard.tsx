@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
-import { PlusIcon, TrashIcon, Calendar, ChevronUp, ChevronDown, CheckCircle, EllipsisVertical } from "lucide-react";
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import { PlusIcon, TrashIcon, Calendar, ChevronUp, ChevronDown, CheckCircle, EllipsisVertical, Check, CircleAlert} from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -44,7 +44,18 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
       await addHabit.mutateAsync(name);
     }
   };
+  const today = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0]; // Format as YYYY-MM-DD, restando un día
+const lastDayDone = (habit)=>{
+    const lastIndex = habit?.habit_entries?.length - 1 ;
+    return habit.habit_entries[lastIndex]?.date;
+  }
+  const isDoneForTheDay = (habit)=>{
+    console.log("isdondefotheday",lastDayDone(habit) == today)
+    return lastDayDone(habit) == today;
+  }
+    
 
+  
   return (
     <Card 
       className="hover:shadow-lg transition-shadow"
@@ -79,7 +90,6 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-       {/*  <DropdownMenuItem onClick={() => console.log("Edit action")}>Edit</DropdownMenuItem> */}
        <DropdownMenuItem  onClick={(e) => {
                       e.stopPropagation();
                       if (confirm('Are you sure you want to delete this Category?')) {
@@ -89,7 +99,6 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
                     Delete
        </DropdownMenuItem> 
         <DropdownMenuSeparator />
-       {/*  <DropdownMenuItem onClick={() => console.log("View action")}>View</DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
           </div>
@@ -106,6 +115,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
           {!habits?.length ? (
             <div>
               <div className="pt-3 max-h-50 flex justify-center">
+                
                 <img 
                   src={noHabitsImage} 
                   alt="create a new habit" 
@@ -122,20 +132,24 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
                   className="flex items-center justify-between p-2 hover:bg-gray-50 pt-2 rounded habit-item"
                 >
                   <div className="flex place-items-stretch gap-2">
-                     <button
-                    className={`text-green-500 hover:text-green-700 transition-opacity ${habit.isCompleted ? 'line-through' : ''}`}
+                    
+                  <button
+                    className={`transition-opacity ${isDoneForTheDay(habit) ? 'text-green-500 hover:text-green-700 line-through' : 'text-red-500 hover:text-red-700'}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleHabit.mutate({ 
                         habitId: habit.id, 
-                        completed: !habit.isCompleted 
+                        completed: !isDoneForTheDay(habit) 
                       });
                     }}
                     title="Mark as done for today"
                   >
                     <CheckCircle className="h-5 w-5" />
                   </button>
-                    <span className="${habit.isCompleted ? 'line-through' : ''}">{habit.name} {habit.isCompleted}</span>
+                    <span className={`${isDoneForTheDay(habit) ? 'line-through' : ''} flex items-center`}>
+                      {habit.name}
+                      {isDoneForTheDay(habit) && <Check className="h-5 w-5 ml-1" />}
+                    </span>
                   </div>
                   <div className="flex">
                     

@@ -47,8 +47,8 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="container mx-auto p-4 ">
       <h1 className="text-1xl font-bold">Profile Page</h1>
-      <div class="grid grid-rows-3 grid-flow-col gap-4 px-4 py-4 leading-10">
-    <div class="p-4 w-full bg-slate-50 rounded-xl row-span-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-4 leading-10">
+    <div className="p-4 w-full bg-slate-50 rounded-xl col-span-1 md:row-span-3">
         <h1>User Info</h1>
         <div className="profile-info mt-3">
             <Avatar>
@@ -68,9 +68,10 @@ const ProfilePage: React.FC = () => {
             Update
           </Button>
         </div>
-      </div></div>
-    <div class="p-4 w-full bg-zinc-100 rounded-xl col-span-2">Categories</div>
-    <div class="p-4 w-full bg-stone-100 rounded-xl row-span-2 col-span-2">
+      </div>
+    </div>
+    <div className="p-4 w-full bg-zinc-100 rounded-xl col-span-1 md:col-span-2">Categories</div>
+    <div className="p-4 w-full bg-stone-100 rounded-xl col-span-1 md:row-span-2 md:col-span-2">
          <Tabs defaultValue="tab1">
       <TabsList>
         <TabsTrigger value="tab1">Tab 1</TabsTrigger>
@@ -87,7 +88,6 @@ const ProfilePage: React.FC = () => {
         <p>This is the content for Tab 3.</p>
       </TabsContent>
     </Tabs>
-
     </div>
 </div>
       

@@ -48,10 +48,11 @@ const Header = () => {
         </Button>
         <Button onClick={handleLogout}  className="mr-4">
           <LogOut className="h-5 w-5"/>
-          Logout
+            <span className="hidden md:block">Logout</span>
         </Button>
                 <Button onClick={handleProfile}  className="mr-4">
-          <UserPen className="h-5 w-5" /> Profile
+          <UserPen className="h-5 w-5" />
+            <span className="hidden md:block">Profile</span>
         </Button>
 
         <Button onClick={toggleTheme} variant="secondary" className="hidden items-center">

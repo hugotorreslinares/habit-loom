@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import CategoryCard from "@/components/CategoryCard";
-import RandomQuote from "@/components/RandomQuote";
+//import RandomQuote from "@/components/RandomQuote";
 import { useNavigate } from "react-router-dom";
 
 
@@ -98,7 +98,7 @@ const Categories = () => {
           <DialogTrigger asChild>
             <Button className="bg-green-600">
               <Plus className="mr-2 h-4 w-4" />
-              New Category
+            <span className="hidden md:block">New Category</span>
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -133,7 +133,8 @@ const Categories = () => {
                 </select>
               </div>
               <Button type="submit" className="w-full">
-                Create Category
+                 <span className="hidden md:block">Create Category</span>
+                
               </Button>
             </form>
           </DialogContent>

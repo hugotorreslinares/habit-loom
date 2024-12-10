@@ -10,15 +10,6 @@ export function useHabits(categoryId: string) {
     queryFn: async () => {
       const { data: user } = await supabase.auth.getUser();
       if (!user.user) throw new Error("Not authenticated");
-
-
-      const todayUTC = new Date();
-      const day = todayUTC.getUTCDate();
-      const month = todayUTC.getUTCMonth() + 1; // Los meses son 0-indexados
-      const year = todayUTC.getUTCFullYear();
-      const newDate = `${year}-${month}-${day}`;
-      console.log(`${year}-${month}-${day}`);
-
       const { data: habits, error: habitsError } = await supabase
         .from('habits')
         .select(`
@@ -31,7 +22,6 @@ export function useHabits(categoryId: string) {
       if (habitsError) {
         throw habitsError;
       }
-      console.log("categoryHabits", habits)
       return habits;
     },
   });
@@ -56,7 +46,6 @@ export function useHabits(categoryId: string) {
   });
 
   const fetchCheckedHabits = async (date: string) => {
-    console.log("date",date)
     const { data: checked, error } = await supabase
       .from('habit_entries')
       .select('*')
@@ -64,7 +53,6 @@ export function useHabits(categoryId: string) {
       .eq('date', date)
 
     if (error) throw error;
-    console.log("checked", checked);
     return checked;
   };
 
@@ -127,15 +115,30 @@ export function useHabits(categoryId: string) {
   const deleteCategory = useMutation({
     
     mutationFn: async (categoryId: string) => {
-      const { error } = await supabase
-        .from('categories') // Assuming your categories are stored in a 'categories' table
+      const { error: deleteHabitsError } = await supabase
+        .from('habit_entries')
         .delete()
-        .eq('id', categoryId); // Use the category ID to identify which category to delete
+        .eq('category_id', categoryId);
+      console.log(categoryId);
+      if (deleteHabitsError) {
+        console.error("Error deleting category:", deleteHabitsError);
+        throw deleteHabitsError;
+      }else {console.log("habit entries succesfully deleted")}
 
-      if (error) throw error; // Throw an error if the deletion fails
+      const { error: deleteCategoryError } = await supabase
+        .from('categories')
+        .delete()
+        .eq('id', categoryId);
+      console.log(categoryId);
+      if (deleteCategoryError) {
+        console.error("Error deleting category:", deleteCategoryError);
+        throw deleteCategoryError;
+      }
+      else {console.log("Category succesfully deleted")}
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['habits'] }); // Invalidate queries related to habits to refresh the data
+      queryClient.invalidateQueries({ queryKey: ['habits'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
   });
 
