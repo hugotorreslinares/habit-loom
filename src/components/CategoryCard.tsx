@@ -102,7 +102,7 @@ const lastDayDone = (habit)=>{
       </DropdownMenuContent>
     </DropdownMenu>
           </div>
-         <button 
+          <button 
             className="p-2 hover:bg-gray-100 rounded-full"
             onClick={handleAddHabit}
           >

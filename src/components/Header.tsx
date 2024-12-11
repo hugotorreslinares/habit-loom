@@ -38,7 +38,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="container flex justify-between items-center p-4 bg-gray-800 text-white">
+    <header className="container flex justify-between items-center p-4 bg-[rgba(246,246,246,1)] text-white">
       <h1 className="flex justify-between text-xl font-bold cursor-pointer bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-green-500" onClick={() => navigate('/')}>
        <CircleSlash2 className="h-5 w-5 mr-3"/> BeBalanced
       </h1>

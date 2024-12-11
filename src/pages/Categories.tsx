@@ -10,6 +10,8 @@ import { useToast } from "@/components/ui/use-toast";
 import CategoryCard from "@/components/CategoryCard";
 //import RandomQuote from "@/components/RandomQuote";
 import { useNavigate } from "react-router-dom";
+import CategoryDialog from "@/components/CategoryDialog"; // Import the new component
+
 
 
 
@@ -27,7 +29,6 @@ const Categories = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const navigate = useNavigate();
-
   const { data: categories, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
@@ -45,7 +46,7 @@ const Categories = () => {
     },
   });
 
-  const createCategory = useMutation({
+/*   const createCategory = useMutation({
     mutationFn: async (category: typeof newCategory) => {
       const { data: user } = await supabase.auth.getUser();
       if (!user.user) throw new Error("Not authenticated");
@@ -78,12 +79,12 @@ const Categories = () => {
         variant: "destructive",
       });
     },
-  });
+  }); */
 
-  const handleSubmit = (e: React.FormEvent) => {
+/*   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     createCategory.mutate(newCategory);
-  };
+  }; */
 
   if (isLoading) {
     return <div className="container min-h-screen flex flex-col items-center justify-center bg-gray-100">Loading...</div>;
@@ -92,53 +93,8 @@ const Categories = () => {
   return (
     <div className="container mx-auto flex flex-col min-h-screen p-4">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-1xl font-bold">Categories
-        </h2>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-green-600">
-              <Plus className="mr-2 h-4 w-4" />
-            <span className="hidden md:block">New Category</span>
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>New Category</DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Input
-                  placeholder="Category Name"
-                  value={newCategory.name}
-                  onChange={(e) => setNewCategory({ ...newCategory, name: e.target.value })}
-                />
-              </div>
-              <div className="flex items-center">
-                <Input
-                  type="color"
-                  value={newCategory.color}
-                  onChange={(e) => setNewCategory({ ...newCategory, color: e.target.value })}
-                  className="mr-4"
-                />
-                <select
-                  value={newCategory.icon}
-                  onChange={(e) => setNewCategory({ ...newCategory, icon: e.target.value })}
-                  className="border rounded p-2"
-                >
-                  {iconOptions.map((icon) => (
-                    <option key={icon} value={icon}>
-                      {icon} 
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <Button type="submit" className="w-full">
-                 <span className="hidden md:block">Create Category</span>
-                
-              </Button>
-            </form>
-          </DialogContent>
-        </Dialog>
+        <h2 className="text-1xl font-bold">Categories</h2>
+        <CategoryDialog isOpen={isOpen} setIsOpen={setIsOpen} type="category"/>
       </div>
       <div className="flex-grow">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -152,7 +108,7 @@ const Categories = () => {
         
         </div>  
         {categories.length == 0 && (
-        <div className="w-full p-60 pt-20"> 
+        <div className="w-full md:p-60 pt-20"> 
           <Card>
             <CardHeader>
               <CardTitle className="text-center">

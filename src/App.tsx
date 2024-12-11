@@ -10,6 +10,7 @@ import CalendarView from "./pages/CalendarView";
 import Index from "./pages/Index";
 import Header from './components/Header';
 import ProfilePage from './pages/ProfilePage';
+import Footer from './components/Footer'; // Import the Footer component
 
 const queryClient = new QueryClient();
 
@@ -75,6 +76,7 @@ const App = () => (
           />
         </Routes>
       </BrowserRouter>
+        <Footer />
     </TooltipProvider>
   </QueryClientProvider>
 );
