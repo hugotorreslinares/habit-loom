@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
 import { ArrowLeft } from "lucide-react";
+import HabitGraph from '@/components/HabitGraph';
+import { prepareGraphData } from '@/utils/dateUtils';
 
 const CalendarView = () => {
   const { categoryId } = useParams();
@@ -121,12 +123,14 @@ const transformData = (array) => {
 };
 
   const formattedDates = entries? transformData(entries) :[];
-  const completedDates = entries?.map(entry =>{
-  const date = new Date(entry.date);
-  date.setDate(date.getDate() + 1); // Add one day to the date
-  return date;
-}) || [];
+  const completedDates = entries?.map(entry => {
+    const date = new Date(entry.date);
+    date.setDate(date.getDate() + 1);
+    return date;
+  }) || [];
   console.log("completedDates",completedDates)
+
+  const graphData = prepareGraphData(entries || [], (entry) => entry.date);
 
   return (
     <div className="container mx-auto p-4">
@@ -146,46 +150,60 @@ const transformData = (array) => {
             <span>{category?.name}</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col md:flex-row justify-around">
-          <div>
-          
-          <Calendar
-            mode="multiple"
-            selected={completedDates}
-            onSelect={(dates) => {
-              if (dates && dates.length > 0) {
-                const lastSelectedDate = dates[dates.length - 1];
-                if (lastSelectedDate) {
-                  toggleEntry.mutate({ date: lastSelectedDate, habitName: "Your Habit Name" });
-                }
-              }
-            }}
-            className="rounded-md border"
-          />
+        <CardContent className="flex flex-col">
+          <div className="w-full mb-6">
+            <HabitGraph 
+              data={graphData}
+              color={category?.color || "#8884d8"}
+              height="200px"
+              maxValue={entries?.length || 0}
+            />
           </div>
-          <div className="w-full md:w-1/2 mt-4 md:mt-0">
+
+          {/* Two Column Layout */}
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Calendar Column */}
+            <div className="md:w-1/2 flex justify-center">
+              <Calendar
+                mode="multiple"
+                selected={completedDates}
+                onSelect={(dates) => {
+                  if (dates && dates.length > 0) {
+                    const lastSelectedDate = dates[dates.length - 1];
+                    if (lastSelectedDate) {
+                      toggleEntry.mutate({ date: lastSelectedDate, habitName: "Your Habit Name" });
+                    }
+                  }
+                }}
+                className="rounded-md border"
+              />
+            </div>
+
+            {/* Table Column */}
+            <div className="md:w-1/2">
               {formattedDates && formattedDates.length > 0 ? (
-          <table className="min-w-full border-collapse border border-gray-200">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border border-gray-300 px-4 py-2 text-left">Habit Name</th>
-                <th className="border border-gray-300 px-4 py-2 text-left">Habit Repetitions</th>
-                <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {formattedDates.map((entry, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="border border-gray-300 px-4 py-2">{entry.habits.name}</td>
-                  <td className="border border-gray-300 px-4 py-2">{entry.habits.repetitions}</td>
-                  <td className="border border-gray-300 px-4 py-2">{entry.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No habits checked for this date.</p> // Optional message when no habits are available
-        )}
+                <table className="min-w-full border-collapse border border-gray-200">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="border border-gray-300 px-4 py-2 text-left">Habit Name</th>
+                      <th className="border border-gray-300 px-4 py-2 text-left">Habit Repetitions</th>
+                      <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {formattedDates.map((entry, index) => (
+                      <tr key={index} className="hover:bg-gray-50">
+                        <td className="border border-gray-300 px-4 py-2">{entry.habits.name}</td>
+                        <td className="border border-gray-300 px-4 py-2">{entry.habits.repetitions}</td>
+                        <td className="border border-gray-300 px-4 py-2">{entry.date}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No habits checked for this date.</p>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
