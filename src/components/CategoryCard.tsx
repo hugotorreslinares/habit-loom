@@ -51,6 +51,7 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newHabitName, setNewHabitName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGraphVisible, setIsGraphvisible] = useState(false);
 
   const handleAddHabit = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -145,12 +146,15 @@ const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
           <CardContent>
             {habits?.length > 0 && (
               <div className="mb-4">
-                <HabitGraph 
+                {isGraphVisible && (
+                  <HabitGraph 
                   data={graphData}
                   color={category.color}
                   height="200px"
                   maxValue={habits?.length || 0}
                 />
+                )}
+                
               </div>
             )}
             {!habits?.length ? (
